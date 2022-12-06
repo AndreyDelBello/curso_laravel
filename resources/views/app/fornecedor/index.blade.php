@@ -18,16 +18,30 @@
 @endphp
 
 @isset($fornecedores) {{-- Se a variavel $fornecedores estiver denifinida então:--}}
-    @for ($i = 0; isset($fornecedores[$i]); < 10; $i++) 
-      Fornecedor: {{ $fornecedores[$i]['nome'] }}
+
+    @forelse ($fornecedores as $indice => $fornecedor)
+      Iteração atual: {{ $loop->iteration }}
       <br>
-      Status: {{ $fornecedores[$i]['status'] }}
+      Fornecedor: {{ $fornecedor['nome'] }}
       <br>
-      CNPJ: {{ $fornecedores[$i]['cnpj'] ?? ''}}
+      Status: {{ $fornecedor['status'] }}
       <br>
-      Telefone: ({{ $fornecedores[$i]['ddd'] ?? ''}}) {{$fornecedores[$i]['telefone'] ?? ''}}
+      CNPJ: {{ $fornecedor['cnpj'] ?? ''}}
+      <br>
+      Telefone: ({{ $fornecedor['ddd'] ?? ''}}) {{$fornecedor['telefone'] ?? ''}}
+      <br>
+      @if($loop->first)
+        Primeira iteração do loop
+      @endif
+      @if($loop->last)
+        Ultima iteração do loop
+        <br>
+        Total de registros: {{ $loop->count }}
+      @endif
       <hr>
-    @endfor
+    @empty
+        Não existem fornecedores cadastrados!!!
+    @endforelse
 @endisset
 
 
